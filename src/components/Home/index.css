@@ -1,0 +1,8 @@
+.side-bar-link-item {
+  text-decoration: none;
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-self: stretch;
+  align-items: center;
+}
