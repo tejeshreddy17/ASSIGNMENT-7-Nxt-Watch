@@ -39,16 +39,33 @@ import {
   Sidebarlogos,
   SidebarLogosContainer,
   ContactusHeading,
+  FailureImage,
+  HeadingFailure,
+  FailureDescription,
+  FailureTryAgain,
 } from './styledComponents'
 
+const apiLoadingStatus = {
+  initial: 'initial',
+  success: 'success',
+  loading: 'loading',
+  failure: 'failure',
+}
+
 class Home extends Component {
-  state = {videos: [], showBanner: true, searchInput: ''}
+  state = {
+    videos: [],
+    showBanner: true,
+    searchInput: '',
+    apiStatus: apiLoadingStatus.loading,
+  }
 
   componentDidMount() {
     this.gettingVideos()
   }
 
   gettingVideos = async () => {
+    this.setState({apiStatus: apiLoadingStatus.loading})
     const jwtToken = Cookies.get('jwt_token')
     const {searchInput} = this.state
     const apiUrl = `https://apis.ccbp.in/videos/all?search=${searchInput}`
@@ -72,8 +89,14 @@ class Home extends Component {
       title: eachData.title,
       viewCount: eachData.view_count,
     }))
-    console.log(formattedData)
-    this.setState({videos: formattedData})
+    if (response.ok === true) {
+      this.setState({
+        videos: formattedData,
+        apiStatus: apiLoadingStatus.success,
+      })
+    } else {
+      this.setState({apiStatus: apiLoadingStatus.failure})
+    }
   }
 
   clickingSearchIcon = () => {
@@ -90,9 +113,81 @@ class Home extends Component {
 
   renderingLoader = () => (
     <div className="loader-container" data-testid="loader">
-      <Loader type="ThreeDots" color="#ffffff" height="50" width="50" />
+      <Loader type="ThreeDots" color="red" height="50" width="50" />
     </div>
   )
+
+  renderingFailureView = darkMode => (
+    <>
+      <FailureImage
+        alt="failure view"
+        src={
+          darkMode
+            ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-dark-theme-img.png'
+            : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png'
+        }
+      />
+      <HeadingFailure darkMode={darkMode}>
+        Oops! Something Went Wrong
+      </HeadingFailure>
+      <FailureDescription>
+        We are having some trouble to compare your request. Please Try again
+      </FailureDescription>
+      <FailureTryAgain onClick={this.gettingVideos}>Retry</FailureTryAgain>
+    </>
+  )
+
+  renderingUI = darkMode => {
+    const {apiStatus} = this.state
+    switch (apiStatus) {
+      case apiLoadingStatus.success:
+        return this.renderingContent(darkMode)
+      case apiLoadingStatus.failure:
+        return this.renderingFailureView(darkMode)
+      case apiLoadingStatus.loading:
+        return this.renderingLoader()
+      default:
+        return null
+    }
+  }
+
+  renderingContent = darkMode => {
+    const {match} = this.props
+    const {videos} = this.state
+
+    const {path} = match
+
+    const {showBanner} = this.state
+
+    if (videos.length === 0) {
+      return (
+        <>
+          <FailureImage
+            alt="no videos"
+            src="https://assets.ccbp.in/frontend/react-js/nxt-watch-no-search-results-img.png"
+          />
+          <HeadingFailure darkMode={darkMode}>
+            No Search results found
+          </HeadingFailure>
+          <FailureDescription>
+            Try different key words or remove search filter
+          </FailureDescription>
+          <FailureTryAgain onClick={this.gettingVideos}>Retry</FailureTryAgain>
+        </>
+      )
+    }
+    return (
+      <VideosSection>
+        {videos.map(eachData => (
+          <HomeVideoItem
+            darkMode={darkMode}
+            eachVideo={eachData}
+            key={eachData.id}
+          />
+        ))}
+      </VideosSection>
+    )
+  }
 
   render() {
     const {match} = this.props
@@ -204,16 +299,7 @@ class Home extends Component {
                       <AiOutlineSearch />
                     </SearchButton>
                   </SearchContainer>
-
-                  <VideosSection>
-                    {videos.map(eachData => (
-                      <HomeVideoItem
-                        darkMode={darkMode}
-                        eachVideo={eachData}
-                        key={eachData.id}
-                      />
-                    ))}
-                  </VideosSection>
+                  {this.renderingUI(darkMode)}
                 </MainSection>
               </BelowHeaderBackground>
             </HomePageBackground>

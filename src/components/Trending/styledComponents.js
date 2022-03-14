@@ -21,7 +21,7 @@ export const SidebarSection = styled.div`
   background-color: ${props => (props.darkMode ? '#212121' : 'white')};
 `
 export const MainSection = styled.div`
-  background-color: ${props => (props.darkMode ? '#181818' : '#f9f9f9')};
+  background-color: ${props => (props.darkMode ? '#0f0f0f' : '#f9f9f9')};
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -31,11 +31,10 @@ export const MainSection = styled.div`
 `
 export const VideosSection = styled.div`
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: flex-start;
   flex-grow: 1;
-  padding: 20px;
+  padding: 20px 50px 20px 50px;
 `
 export const TestCase = styled.div`
   background-color: ${props => {
@@ -54,39 +53,6 @@ export const TestCase = styled.div`
   font-weight: ${props => (props.outline ? ' bold' : '400')};
 `
 
-export const SearchContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  height: 35px;
-  width: 550px;
-  margin-left: 20px;
-  margin-top: 20px;
-`
-export const SearchButton = styled.button`
-  border: none;
-  width: 75px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-size: 16px;
-  border: ${props =>
-    props.darkMode ? '1px solid #3A393A' : '1px solid #ebebeb'};
-  cursor: pointer;
-  background-color: ${props => (props.darkMode ? '#313031' : '')};
-  color: ${props => (props.darkMode ? '#ebebeb' : '')};
-`
-export const SearchInput = styled.input`
-  height: 35px;
-  padding-left: 10px;
-  border: none;
-  width: 450px;
-  color: ${props => (props.darkMode ? '#ebebeb' : '')};
-  outline: none;
-  background-color: ${props => (props.darkMode ? 'transparent' : '')};
-  border: ${props =>
-    props.darkMode ? '1px solid #3A393A' : '1px solid #ebebeb '};
-`
 export const HomeIcon = styled.button`
   color: ${props => (props.outline ? ' red' : '#475569')};
   background-color: transparent;
@@ -100,41 +66,7 @@ export const SideBarHeadings = styled.p`
   margin: 0px 0px 4px;
   color: ${props => (props.darkMode ? '#f9f9f9' : '')};
 `
-export const BannerSection = styled.div`
-  background-color: white;
-  display: flex;
-  background-image: url('https://assets.ccbp.in/frontend/react-js/nxt-watch-banner-bg.png');
-  background-size: cover;
-  flex-direction: column;
-  padding: 20px;
-`
-export const BannerLogo = styled.img`
-  width: 200px;
-  height: 50px;
-`
-export const BannerButton = styled.button`
-  background-color: transparent;
-  border: 1.5px solid #313131;
-  padding: 10px;
-  font-size: 16px;
-  font-weight: 600;
-  align-self: flex-start;
-`
-export const CloseButton = styled.button`
-  background-color: transparent;
-  border: none;
-  align-self: flex-end;
-  font-size: 20px;
-  cursor: pointer;
-`
-export const Bannerheading = styled.h1`
-  font-weight: 500;
-  color: #313131;
-  font-size: 18px;
-  width: 360px;
-  margin-bottom: 25px;
-  margin-top: 25px;
-`
+
 export const SidebarFooterSection = styled.div`
   display: flex;
   flex-direction: column;
@@ -189,4 +121,27 @@ export const FailureTryAgain = styled.button`
   border-radius: 8px;
   font-weight: 500;
   cursor: pointer;
+`
+export const TrendingHeadingContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: ${props => (props.darkMode ? '#181818' : '#f1f1f1')};
+  padding: 20px 50px 20px 50px;
+`
+export const TrendingLogo = styled.div`
+  height: 80px;
+  width: 80px;
+  background-color: ${props => (props.darkMode ? '#383838' : '#e2e8f0')};
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 40px;
+  font-size: 25px;
+  color: red;
+`
+export const TrendingsectionHeading = styled.h1`
+  color: ${props => (props.darkMode ? '#f1f1f1' : '#383838')};
+  margin-left: 25px;
 `

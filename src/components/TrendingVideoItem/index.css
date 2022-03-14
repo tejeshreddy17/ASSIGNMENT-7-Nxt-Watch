@@ -1,0 +1,19 @@
+.Trending-link-item {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-right: 25px;
+  flex-grow: 1;
+  margin-bottom: 15px;
+  align-self: stretch;
+}
+
+.dot {
+  color: #909090;
+  margin-bottom: 0px;
+  font-size: 28px;
+  margin-top: 5px;
+  margin-right: 2px;
+}
