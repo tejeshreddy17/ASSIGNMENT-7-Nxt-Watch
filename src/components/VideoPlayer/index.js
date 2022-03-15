@@ -1,6 +1,10 @@
 import {Component} from 'react'
 import {Link} from 'react-router-dom'
+
 import Cookies from 'js-cookie'
+
+import ReactPlayer from 'react-player'
+
 import Loader from 'react-loader-spinner'
 
 import {AiFillHome} from 'react-icons/ai'
@@ -12,9 +16,11 @@ import {FaFire} from 'react-icons/fa'
 import {SiYoutubegaming} from 'react-icons/si'
 
 import Header from '../Header'
+
+import GamingVideoItem from '../GamingVideoItem'
+
 import ModeContext from '../Context'
 
-import TrendingVideoItem from '../TrendingVideoItem'
 import './index.css'
 
 import {
@@ -47,7 +53,7 @@ const apiLoadingStatus = {
   failure: 'failure',
 }
 
-class Trending extends Component {
+class VideoPlayer extends Component {
   state = {
     videos: [],
     apiStatus: apiLoadingStatus.initial,
@@ -59,8 +65,11 @@ class Trending extends Component {
 
   gettingVideos = async () => {
     this.setState({apiStatus: apiLoadingStatus.loading})
+    const {match} = this.props
+    const {params} = match
+    const {id} = params
     const jwtToken = Cookies.get('jwt_token')
-    const apiUrl = `https://apis.ccbp.in/videos/trending`
+    const apiUrl = `https://apis.ccbp.in/videos/${id}`
     const options = {
       headers: {
         Authorization: `Bearer ${jwtToken}`,
@@ -70,17 +79,21 @@ class Trending extends Component {
     const response = await fetch(apiUrl, options)
     const data = await response.json()
 
-    const formattedData = data.videos.map(eachData => ({
+    const formattedData = {
       channel: {
-        name: eachData.channel.name,
-        profileImageUrl: eachData.channel.profile_image_url,
+        name: data.video_details.channel.name,
+        profileImageUrl: data.video_details.channel.profile_image_url,
+        subscriberCount: data.video_details.subscriber_count,
       },
-      id: eachData.id,
-      publishedAt: eachData.published_at,
-      thumbnailUrl: eachData.thumbnail_url,
-      title: eachData.title,
-      viewCount: eachData.view_count,
-    }))
+      videoUrl: data.video_details.video_url,
+      id: data.video_details.id,
+      thumbnailUrl: data.video_details.thumbnail_url,
+      title: data.video_details.title,
+      viewCount: data.video_details.view_count,
+      description: data.video_details.description,
+      publishedAt: data.video_details.published_at,
+    }
+    console.log(formattedData)
     if (response.ok === true) {
       this.setState({
         videos: formattedData,
@@ -117,6 +130,31 @@ class Trending extends Component {
     </FailureContainer>
   )
 
+  renderingContent = darkMode => {
+    const {match} = this.props
+    const {params} = match
+    const {id} = params
+    console.log(id)
+    const {videos} = this.state
+
+    const {path} = match
+
+    const {showBanner} = this.state
+
+    return (
+      <>
+        <VideosSection>
+          <ReactPlayer
+            width="100%"
+            height="80%"
+            url={videos.videoUrl}
+            controls
+          />
+        </VideosSection>
+      </>
+    )
+  }
+
   renderingUI = darkMode => {
     const {apiStatus} = this.state
     switch (apiStatus) {
@@ -129,38 +167,6 @@ class Trending extends Component {
       default:
         return null
     }
-  }
-
-  renderingContent = darkMode => {
-    const {match} = this.props
-    const {videos} = this.state
-
-    const {path} = match
-
-    const {showBanner} = this.state
-
-    return (
-      <>
-        <TrendingHeadingContainer darkMode={darkMode}>
-          <TrendingLogo darkMode={darkMode}>
-            <FaFire />
-          </TrendingLogo>
-          <TrendingsectionHeading darkMode={darkMode}>
-            Trending
-          </TrendingsectionHeading>
-        </TrendingHeadingContainer>
-
-        <VideosSection>
-          {videos.map(eachData => (
-            <TrendingVideoItem
-              darkMode={darkMode}
-              eachVideo={eachData}
-              key={eachData.id}
-            />
-          ))}
-        </VideosSection>
-      </>
-    )
   }
 
   render() {
@@ -255,4 +261,4 @@ class Trending extends Component {
   }
 }
 
-export default Trending
+export default VideoPlayer

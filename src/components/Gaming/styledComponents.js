@@ -31,8 +31,9 @@ export const MainSection = styled.div`
 `
 export const VideosSection = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
   flex-grow: 1;
   padding: 20px 50px 20px 50px;
 `
@@ -138,7 +139,7 @@ export const TrendingLogo = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 40px;
-  font-size: 25px;
+  font-size: 30px;
   color: red;
 `
 export const TrendingsectionHeading = styled.h1`

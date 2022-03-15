@@ -8,6 +8,7 @@ import Home from './components/Home'
 import Trending from './components/Trending'
 import Gaming from './components/Gaming'
 import SavedVideos from './components/SavedVideos'
+import VideoPlayer from './components/VideoPlayer'
 
 import ModeContext from './components/Context'
 
@@ -32,6 +33,7 @@ class App extends Component {
           <ProtectedRoute exact path="/trending" component={Trending} />
           <ProtectedRoute exact path="/gaming" component={Gaming} />
           <ProtectedRoute exact path="/saved-videos" component={SavedVideos} />
+          <ProtectedRoute exact path="/videos/:id" component={VideoPlayer} />
         </Switch>
       </ModeContext.Provider>
     )
