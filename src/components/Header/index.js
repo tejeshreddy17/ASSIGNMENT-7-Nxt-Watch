@@ -29,8 +29,8 @@ import {
 const Header = props => (
   <ModeContext.Consumer>
     {value => {
-      const {darkMode, changeMode} = value
-      console.log(darkMode)
+      const {darkMode, changeMode, savedVideos} = value
+
       const onClickingChangeMode = () => {
         changeMode()
       }

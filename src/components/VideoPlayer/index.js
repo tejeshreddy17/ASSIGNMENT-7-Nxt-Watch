@@ -7,14 +7,18 @@ import ReactPlayer from 'react-player'
 
 import Loader from 'react-loader-spinner'
 
+import {formatDistanceToNow} from 'date-fns'
+
 import {AiFillHome} from 'react-icons/ai'
 
 import {RiMenuAddLine} from 'react-icons/ri'
 
+import {BiDislike, BiLike} from 'react-icons/bi'
+
 import {FaFire} from 'react-icons/fa'
 
 import {SiYoutubegaming} from 'react-icons/si'
-
+import {BsDot} from 'react-icons/bs'
 import Header from '../Header'
 
 import GamingVideoItem from '../GamingVideoItem'
@@ -44,6 +48,17 @@ import {
   TrendingLogo,
   TrendingsectionHeading,
   FailureContainer,
+  DescriptionContainer,
+  CreatorLogo,
+  DetailsContainer,
+  ViewsandDate,
+  Description,
+  ChannelName,
+  ViewsContainer,
+  LikeDislikeContainer,
+  LikesButton,
+  SavedButton,
+  DisLikesButton,
 } from './styledComponents'
 
 const apiLoadingStatus = {
@@ -55,8 +70,11 @@ const apiLoadingStatus = {
 
 class VideoPlayer extends Component {
   state = {
-    videos: [],
+    videos: {channel: {}},
     apiStatus: apiLoadingStatus.initial,
+    likeStatus: false,
+    dislikeStatus: false,
+    saveStatus: false,
   }
 
   componentDidMount() {
@@ -83,7 +101,7 @@ class VideoPlayer extends Component {
       channel: {
         name: data.video_details.channel.name,
         profileImageUrl: data.video_details.channel.profile_image_url,
-        subscriberCount: data.video_details.subscriber_count,
+        subscriberCount: data.video_details.channel.subscriber_count,
       },
       videoUrl: data.video_details.video_url,
       id: data.video_details.id,
@@ -92,8 +110,9 @@ class VideoPlayer extends Component {
       viewCount: data.video_details.view_count,
       description: data.video_details.description,
       publishedAt: data.video_details.published_at,
+      isSaved: false,
     }
-    console.log(formattedData)
+
     if (response.ok === true) {
       this.setState({
         videos: formattedData,
@@ -130,28 +149,117 @@ class VideoPlayer extends Component {
     </FailureContainer>
   )
 
+  updatingLikeStatus = () => {
+    this.setState(prevState => ({
+      likeStatus: !prevState.likeStatus,
+      dislikeStatus: false,
+    }))
+  }
+
+  updatingdisLikeStatus = () => {
+    this.setState(prevState => ({
+      dislikeStatus: !prevState.dislikeStatus,
+      likeStatus: false,
+    }))
+  }
+
+  updatingSaveStatus = () => {
+    this.setState(prevState => ({
+      saveStatus: !prevState.saveStatus,
+    }))
+  }
+
   renderingContent = darkMode => {
     const {match} = this.props
     const {params} = match
     const {id} = params
-    console.log(id)
+    // console.log(id)
     const {videos} = this.state
 
     const {path} = match
 
-    const {showBanner} = this.state
+    const {showBanner, likeStatus, dislikeStatus, saveStatus} = this.state
+    const {
+      channel,
+      description,
+      publishedAt,
+      thumbnailUrl,
+      title,
+      videoUrl,
+      viewCount,
+    } = videos
 
     return (
-      <>
-        <VideosSection>
-          <ReactPlayer
-            width="100%"
-            height="80%"
-            url={videos.videoUrl}
-            controls
-          />
-        </VideosSection>
-      </>
+      <ModeContext.Consumer>
+        {value => {
+          const {updatingSavedVideos, savedVideos} = value
+          // console.log(savedVideos)
+          // console.log(savedVideos.filter(eachVideo => eachVideo.id === id))
+
+          const gettingSaveStatus = () => {
+            if (
+              savedVideos.filter(eachVideo => eachVideo.id === id).length === 0
+            ) {
+              return false
+            }
+            return (
+              savedVideos.filter(eachVideo => eachVideo.id === id)[0].id === id
+            )
+          }
+          const gettingSaveStatusOfCurrentVideo =
+            savedVideos.length !== 0 ? gettingSaveStatus() : false
+
+          // console.log(gettingSaveStatusOfCurrentVideo)
+          const savingVideo = () => {
+            const updatingSaveStatusList = {...videos, isSaved: !saveStatus}
+            updatingSavedVideos(videos, saveStatus, updatingSaveStatusList, id)
+            this.updatingSaveStatus()
+          }
+
+          return (
+            <VideosSection>
+              <ReactPlayer
+                width="100%"
+                height="80%"
+                url={videos.videoUrl}
+                controls
+              />
+              <DescriptionContainer>
+                <DetailsContainer>
+                  <Description darkMode={darkMode}>{title}</Description>
+                  <ViewsContainer>
+                    <ViewsandDate>{viewCount} views </ViewsandDate>
+                    <BsDot className="dot" />
+                    <ViewsandDate>
+                      {formatDistanceToNow(new Date(publishedAt))}
+                    </ViewsandDate>
+                    <LikeDislikeContainer>
+                      <LikesButton
+                        likeStatus={likeStatus}
+                        onClick={this.updatingLikeStatus}
+                      >
+                        <BiLike /> Like
+                      </LikesButton>
+                      <DisLikesButton
+                        dislikeStatus={dislikeStatus}
+                        onClick={this.updatingdisLikeStatus}
+                      >
+                        <BiDislike /> Dislike
+                      </DisLikesButton>
+                      <SavedButton
+                        saveStatus={gettingSaveStatusOfCurrentVideo}
+                        onClick={savingVideo}
+                      >
+                        <RiMenuAddLine /> Save
+                      </SavedButton>
+                    </LikeDislikeContainer>
+                  </ViewsContainer>
+                </DetailsContainer>
+              </DescriptionContainer>
+            </VideosSection>
+          )
+        }}
+      </ModeContext.Consumer>
     )
   }
 
@@ -171,6 +279,18 @@ class VideoPlayer extends Component {
 
   render() {
     const {match} = this.props
+    const {videos} = this.state
+
+    const {
+      channel,
+      description,
+      id,
+      publishedAt,
+      thumbnailUrl,
+      title,
+      videoUrl,
+      viewCount,
+    } = videos
 
     const {path} = match
     return (

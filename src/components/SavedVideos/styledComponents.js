@@ -33,8 +33,8 @@ export const VideosSection = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: 20px;
   flex-grow: 1;
+  padding: 20px 50px 20px 50px;
 `
 export const TestCase = styled.div`
   background-color: ${props => {
@@ -138,7 +138,7 @@ export const TrendingLogo = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 40px;
-  font-size: 30px;
+  font-size: 25px;
   color: red;
 `
 export const TrendingsectionHeading = styled.h1`
@@ -151,93 +151,4 @@ export const FailureContainer = styled.div`
   align-items: center;
   justify-content: center;
   height: 100vh;
-`
-export const DescriptionContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-start;
-  margin-top: 10px;
-`
-
-export const CreatorLogo = styled.img`
-  height: 38px;
-  margin-right: 15px;
-`
-
-export const DetailsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  flex-grow: 1;
-`
-
-export const ViewsandDate = styled.p`
-  color: #909090;
-  margin-top: 0px;
-  margin-bottom: 0px;
-  font-weight: 400;
-  margin-right: 4px;
-`
-export const Description = styled.p`
-  color: ${props => (props.darkMode ? '#f9f9f9' : '#1e293b')};
-  color: ;
-  margin-top: 0px;
-  margin-bottom: 10px;
-  font-weight: 400;
-`
-export const ChannelName = styled.p`
-  margin-top: 0px;
-  color: #909090;
-  margin-bottom: 5px;
-  font-weight: 400;
-`
-export const ViewsContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  flex-grow: 1;
-  align-self: stretch;
-`
-export const LikeDislikeContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  flex-grow: 1;
-  justify-content: flex-end;
-`
-export const LikesButton = styled.button`
-  background-color: transparent;
-  border: none;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-right: 15px;
-  cursor: pointer;
-  font-size: 16px;
-  color: ${props => (props.likeStatus ? '#2563eb' : '#64748b')};
-`
-export const DisLikesButton = styled.button`
-  background-color: transparent;
-  border: none;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-right: 15px;
-  cursor: pointer;
-  font-size: 16px;
-  color: ${props => (props.dislikeStatus ? '#2563eb' : '#64748b')};
-`
-export const SavedButton = styled.button`
-  background-color: transparent;
-  border: none;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-right: 15px;
-  cursor: pointer;
-  font-size: 16px;
-  color: ${props => (props.saveStatus ? '#2563eb' : '#64748b')};
 `

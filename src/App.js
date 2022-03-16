@@ -16,17 +16,77 @@ import './App.css'
 
 // Replace your code here
 class App extends Component {
-  state = {darkMode: false}
+  state = {darkMode: false, savedVideos: []}
 
   changeMode = () => {
     this.setState(prevState => ({darkMode: !prevState.darkMode}))
   }
 
+  updatingSavedVideos = (newVideo, saveStatus, updatingSaveStatusList, id) => {
+    console.log(updatingSaveStatusList)
+
+    const {savedVideos} = this.state
+    console.log(savedVideos)
+
+    savedVideos.map(eachVideo => {
+      if (eachVideo.id === id) {
+        return console.log('if')
+      }
+      return console.log('else')
+    })
+
+    if (savedVideos.length === 0) {
+      this.setState({savedVideos: [updatingSaveStatusList]})
+    } else {
+      this.setState(prevState => ({
+        savedVideos: prevState.savedVideos.map(eachVideo => {
+          if (eachVideo.id === id) {
+            return {...eachVideo, isSaved: !eachVideo.isSaved}
+          }
+          return eachVideo
+        }),
+      }))
+    }
+
+    const addingVideo = () => {
+      if (savedVideos.includes(newVideo)) {
+        this.setState(prevState => ({
+          savedVideos: [...prevState.savedVideos],
+        }))
+      } else {
+        this.setState(prevState => ({
+          savedVideos: [...prevState.savedVideos, updatingSaveStatusList],
+        }))
+      }
+    }
+
+    const deletingVideo = () => {
+      if (savedVideos.includes(newVideo)) {
+        this.setState(prevState => ({
+          savedVideos: prevState.savedVideos.filter(
+            eachVideo => eachVideo !== updatingSaveStatusList,
+          ),
+        }))
+      } else {
+        this.setState(prevState => ({
+          savedVideos: [...prevState.savedVideos],
+        }))
+      }
+    }
+  }
+
   render() {
-    const {darkMode} = this.state
+    const {darkMode, savedVideos} = this.state
 
     return (
-      <ModeContext.Provider value={{darkMode, changeMode: this.changeMode}}>
+      <ModeContext.Provider
+        value={{
+          darkMode,
+          changeMode: this.changeMode,
+          updatingSavedVideos: this.updatingSavedVideos,
+          savedVideos,
+        }}
+      >
         <Switch>
           <Route exact path="/login" component={Login} />
           <ProtectedRoute exact path="/" component={Home} />
