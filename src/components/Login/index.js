@@ -65,7 +65,10 @@ class Login extends Component {
     return (
       <LoginAppBackground>
         <LoginForm onSubmit={this.submittingForm}>
-          <Logo src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png" />
+          <Logo
+            alt="website logo"
+            src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
+          />
           <LabelButton marginTop="10px" htmlFor="username">
             USERNAME
           </LabelButton>

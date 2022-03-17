@@ -152,12 +152,7 @@ class Home extends Component {
   }
 
   renderingContent = darkMode => {
-    const {match} = this.props
     const {videos} = this.state
-
-    const {path} = match
-
-    const {showBanner} = this.state
 
     if (videos.length === 0) {
       return (
@@ -191,7 +186,6 @@ class Home extends Component {
 
   render() {
     const {match} = this.props
-    const {videos} = this.state
 
     const {path} = match
 
@@ -269,7 +263,7 @@ class Home extends Component {
                     </ContactusHeading>
                   </SidebarFooterSection>
                 </SidebarSection>
-                <MainSection darkMode={darkMode}>
+                <MainSection data-testid="home" darkMode={darkMode}>
                   {showBanner && (
                     <BannerSection>
                       <CloseButton

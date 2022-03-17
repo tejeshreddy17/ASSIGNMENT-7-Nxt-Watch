@@ -243,7 +243,7 @@ class Trending extends Component {
                     </ContactusHeading>
                   </SidebarFooterSection>
                 </SidebarSection>
-                <MainSection darkMode={darkMode}>
+                <MainSection data-testid="trending" darkMode={darkMode}>
                   {this.renderingUI(darkMode)}
                 </MainSection>
               </BelowHeaderBackground>

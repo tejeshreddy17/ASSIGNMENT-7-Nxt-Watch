@@ -44,9 +44,6 @@ import {
   HeadingFailure,
   FailureDescription,
   FailureTryAgain,
-  TrendingHeadingContainer,
-  TrendingLogo,
-  TrendingsectionHeading,
   FailureContainer,
   DescriptionContainer,
   CreatorLogo,
@@ -176,16 +173,12 @@ class VideoPlayer extends Component {
     // console.log(id)
     const {videos} = this.state
 
-    const {path} = match
-
-    const {showBanner, likeStatus, dislikeStatus, saveStatus} = this.state
+    const {likeStatus, dislikeStatus, saveStatus} = this.state
     const {
-      channel,
-      description,
       publishedAt,
-      thumbnailUrl,
+
       title,
-      videoUrl,
+
       viewCount,
     } = videos
 
@@ -193,28 +186,41 @@ class VideoPlayer extends Component {
       <ModeContext.Consumer>
         {value => {
           const {updatingSavedVideos, savedVideos} = value
-          // console.log(savedVideos)
-          // console.log(savedVideos.filter(eachVideo => eachVideo.id === id))
 
-          const gettingSaveStatus = () => {
-            if (
-              savedVideos.filter(eachVideo => eachVideo.id === id).length === 0
-            ) {
-              return false
-            }
-            return (
-              savedVideos.filter(eachVideo => eachVideo.id === id)[0].id === id
-            )
-          }
-          const gettingSaveStatusOfCurrentVideo =
-            savedVideos.length !== 0 ? gettingSaveStatus() : false
-
-          // console.log(gettingSaveStatusOfCurrentVideo)
           const savingVideo = () => {
-            const updatingSaveStatusList = {...videos, isSaved: !saveStatus}
-            updatingSavedVideos(videos, saveStatus, updatingSaveStatusList, id)
+            if (savedVideos.length === 0) {
+              const updatingSaveStatusList = {...videos, isSaved: !saveStatus}
+              updatingSavedVideos(
+                videos,
+                saveStatus,
+                updatingSaveStatusList,
+                id,
+              )
+            } else {
+              const videoOject = savedVideos.filter(
+                eachVideo => eachVideo.id === id,
+              )
+              const updatingSaveStatusList =
+                videoOject.length === 0
+                  ? {...videos, isSaved: !saveStatus}
+                  : {
+                      ...videoOject[0],
+                      isSaved: !videoOject[0].isSaved,
+                    }
+              updatingSavedVideos(
+                videos,
+                saveStatus,
+                updatingSaveStatusList,
+                id,
+              )
+            }
+
             this.updatingSaveStatus()
           }
+
+          const playedVideoObject = savedVideos.filter(
+            eachVideo => eachVideo.id === id,
+          )
 
           return (
             <VideosSection>
@@ -247,8 +253,8 @@ class VideoPlayer extends Component {
                         <BiDislike /> Dislike
                       </DisLikesButton>
                       <SavedButton
-                        saveStatus={gettingSaveStatusOfCurrentVideo}
                         onClick={savingVideo}
+                        saveStatus={playedVideoObject.length !== 0}
                       >
                         <RiMenuAddLine /> Save
                       </SavedButton>
@@ -279,18 +285,6 @@ class VideoPlayer extends Component {
 
   render() {
     const {match} = this.props
-    const {videos} = this.state
-
-    const {
-      channel,
-      description,
-      id,
-      publishedAt,
-      thumbnailUrl,
-      title,
-      videoUrl,
-      viewCount,
-    } = videos
 
     const {path} = match
     return (
@@ -369,7 +363,7 @@ class VideoPlayer extends Component {
                     </ContactusHeading>
                   </SidebarFooterSection>
                 </SidebarSection>
-                <MainSection darkMode={darkMode}>
+                <MainSection data-testid="videoItemDetails" darkMode={darkMode}>
                   {this.renderingUI(darkMode)}
                 </MainSection>
               </BelowHeaderBackground>

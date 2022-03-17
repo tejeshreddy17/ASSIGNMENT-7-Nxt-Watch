@@ -52,6 +52,7 @@ const Header = props => (
                     ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-dark-theme-img.png'
                     : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png'
                 }
+                alt="website logo"
               />
             </ImageSection>
           </Link>
@@ -60,6 +61,7 @@ const Header = props => (
             <ChangeModeButton
               darkMode={darkMode}
               onClick={onClickingChangeMode}
+              data-testid="theme"
             >
               {darkMode ? <FiSun /> : <FaMoon />}
             </ChangeModeButton>
@@ -77,7 +79,7 @@ const Header = props => (
               {close => (
                 <>
                   <PopupDescription>
-                    Are you sure you want to Logout
+                    Are you sure, you want to logout
                   </PopupDescription>
                   <ButtonContainer>
                     <CancelButton

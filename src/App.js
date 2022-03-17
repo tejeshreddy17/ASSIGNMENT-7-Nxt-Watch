@@ -4,10 +4,15 @@ import {Switch, Route} from 'react-router-dom'
 import ProtectedRoute from './components/ProtectedRoute'
 
 import Login from './components/Login'
+
 import Home from './components/Home'
+
 import Trending from './components/Trending'
+
 import Gaming from './components/Gaming'
+
 import SavedVideos from './components/SavedVideos'
+
 import VideoPlayer from './components/VideoPlayer'
 
 import ModeContext from './components/Context'
@@ -22,56 +27,41 @@ class App extends Component {
     this.setState(prevState => ({darkMode: !prevState.darkMode}))
   }
 
-  updatingSavedVideos = (newVideo, saveStatus, updatingSaveStatusList, id) => {
+  updatingSavedVideos = (newVideo, saveStatus, updatingSaveStatusList) => {
     console.log(updatingSaveStatusList)
 
     const {savedVideos} = this.state
-    console.log(savedVideos)
-
-    savedVideos.map(eachVideo => {
-      if (eachVideo.id === id) {
-        return console.log('if')
-      }
-      return console.log('else')
-    })
-
     if (savedVideos.length === 0) {
       this.setState({savedVideos: [updatingSaveStatusList]})
-    } else {
-      this.setState(prevState => ({
-        savedVideos: prevState.savedVideos.map(eachVideo => {
-          if (eachVideo.id === id) {
-            return {...eachVideo, isSaved: !eachVideo.isSaved}
-          }
-          return eachVideo
-        }),
-      }))
     }
 
-    const addingVideo = () => {
-      if (savedVideos.includes(newVideo)) {
-        this.setState(prevState => ({
-          savedVideos: [...prevState.savedVideos],
-        }))
-      } else {
-        this.setState(prevState => ({
-          savedVideos: [...prevState.savedVideos, updatingSaveStatusList],
-        }))
-      }
-    }
+    if (savedVideos.length > 0) {
+      const othersObjects = savedVideos.filter(
+        eachVideo => eachVideo.id !== updatingSaveStatusList.id,
+      )
+      const selectedObjectList = savedVideos.filter(
+        eachVideo => eachVideo.id === updatingSaveStatusList.id,
+      )
 
-    const deletingVideo = () => {
-      if (savedVideos.includes(newVideo)) {
-        this.setState(prevState => ({
-          savedVideos: prevState.savedVideos.filter(
-            eachVideo => eachVideo !== updatingSaveStatusList,
-          ),
-        }))
-      } else {
-        this.setState(prevState => ({
-          savedVideos: [...prevState.savedVideos],
-        }))
-      }
+      const selectedObjectListwithSave =
+        selectedObjectList.length === 0
+          ? [{...updatingSaveStatusList}]
+          : [
+              {
+                ...selectedObjectList[0],
+                isSaved: updatingSaveStatusList.isSaved,
+              },
+            ]
+
+      const newSavedVideosList = [
+        ...othersObjects,
+        ...selectedObjectListwithSave,
+      ]
+      this.setState({
+        savedVideos: newSavedVideosList.filter(
+          eachVideo => eachVideo.isSaved === true,
+        ),
+      })
     }
   }
 

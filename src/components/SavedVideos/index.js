@@ -131,37 +131,28 @@ class SavedVideos extends Component {
     }
   }
 
-  renderingContent = (darkMode, savedVideos) => {
-    const {match} = this.props
-    const {videos} = this.state
+  renderingContent = (darkMode, savedVideos) => (
+    <>
+      <TrendingHeadingContainer darkMode={darkMode}>
+        <TrendingLogo darkMode={darkMode}>
+          <FaFire />
+        </TrendingLogo>
+        <TrendingsectionHeading darkMode={darkMode}>
+          Saved Videos
+        </TrendingsectionHeading>
+      </TrendingHeadingContainer>
 
-    const {path} = match
-
-    const {showBanner} = this.state
-
-    return (
-      <>
-        <TrendingHeadingContainer darkMode={darkMode}>
-          <TrendingLogo darkMode={darkMode}>
-            <FaFire />
-          </TrendingLogo>
-          <TrendingsectionHeading darkMode={darkMode}>
-            Saved Videos
-          </TrendingsectionHeading>
-        </TrendingHeadingContainer>
-
-        <VideosSection>
-          {savedVideos.map(eachData => (
-            <TrendingVideoItem
-              darkMode={darkMode}
-              eachVideo={eachData}
-              key={eachData.id}
-            />
-          ))}
-        </VideosSection>
-      </>
-    )
-  }
+      <VideosSection>
+        {savedVideos.map(eachData => (
+          <TrendingVideoItem
+            darkMode={darkMode}
+            eachVideo={eachData}
+            key={eachData.id}
+          />
+        ))}
+      </VideosSection>
+    </>
+  )
 
   render() {
     const {match} = this.props
@@ -211,8 +202,14 @@ class SavedVideos extends Component {
                     </TestCase>
                   </Link>
                   <Link className="side-bar-link-item " to="/saved-videos">
-                    <TestCase outline={path === '/saved-videos'}>
-                      <HomeIcon outline={path === '/gaming'}>
+                    <TestCase
+                      darkMode={darkMode}
+                      outline={path === '/saved-videos'}
+                    >
+                      <HomeIcon
+                        darkMode={darkMode}
+                        outline={path === '/saved-videos'}
+                      >
                         <RiMenuAddLine />
                       </HomeIcon>
                       <SideBarHeadings darkMode={darkMode}>

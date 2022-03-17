@@ -1,17 +1,11 @@
 import {Link} from 'react-router-dom'
 
-import {BsDot} from 'react-icons/bs'
-
-import {formatDistanceToNow} from 'date-fns'
-
 import {
   VideoContainer,
   Description,
   DescriptionContainer,
-  CreatorLogo,
   VideoThumbnail,
   DetailsContainer,
-  ChannelName,
   ViewsandDate,
   ViewsContainer,
 } from './styledComponents'

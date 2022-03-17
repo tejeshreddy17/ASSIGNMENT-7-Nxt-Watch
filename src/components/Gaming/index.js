@@ -118,12 +118,7 @@ class Gaming extends Component {
   )
 
   renderingContent = darkMode => {
-    const {match} = this.props
     const {videos} = this.state
-
-    const {path} = match
-
-    const {showBanner} = this.state
 
     return (
       <>
@@ -201,8 +196,11 @@ class Gaming extends Component {
                     </TestCase>
                   </Link>
                   <Link className="side-bar-link-item " to="/gaming">
-                    <TestCase outline={path === '/gaming'}>
-                      <HomeIcon outline={path === '/gaming'}>
+                    <TestCase darkMode={darkMode} outline={path === '/gaming'}>
+                      <HomeIcon
+                        darkMode={darkMode}
+                        outline={path === '/gaming'}
+                      >
                         <SiYoutubegaming />
                       </HomeIcon>
                       <SideBarHeadings darkMode={darkMode}>
@@ -212,7 +210,7 @@ class Gaming extends Component {
                   </Link>
                   <Link className="side-bar-link-item " to="/saved-videos">
                     <TestCase outline={path === '/saved-videos'}>
-                      <HomeIcon outline={path === '/gaming'}>
+                      <HomeIcon outline={path === '/saved-videos'}>
                         <RiMenuAddLine />
                       </HomeIcon>
                       <SideBarHeadings darkMode={darkMode}>
@@ -243,7 +241,7 @@ class Gaming extends Component {
                     </ContactusHeading>
                   </SidebarFooterSection>
                 </SidebarSection>
-                <MainSection darkMode={darkMode}>
+                <MainSection data-testid="savedVideos" darkMode={darkMode}>
                   {this.renderingUI(darkMode)}
                 </MainSection>
               </BelowHeaderBackground>
