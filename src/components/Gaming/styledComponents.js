@@ -89,7 +89,7 @@ export const SidebarLogosContainer = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
 `
-export const ContactusHeading = styled.h1`
+export const ContactusHeading = styled.p`
   font-size: ${props => props.font};
   color: #475569;
   font-weight: ${props => props.weight};

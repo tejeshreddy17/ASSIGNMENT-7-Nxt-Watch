@@ -239,7 +239,7 @@ class Trending extends Component {
                       />
                     </SidebarLogosContainer>
                     <ContactusHeading weight="500" font="16px">
-                      Enjoy! Now see to your Channels and Recommendations!{' '}
+                      Enjoy! Now to see your channels and recommendations!
                     </ContactusHeading>
                   </SidebarFooterSection>
                 </SidebarSection>

@@ -332,7 +332,7 @@ class VideoPlayer extends Component {
                   </Link>
                   <Link className="side-bar-link-item " to="/saved-videos">
                     <TestCase outline={path === '/saved-videos'}>
-                      <HomeIcon outline={path === '/gaming'}>
+                      <HomeIcon outline={path === '/saved-videos'}>
                         <RiMenuAddLine />
                       </HomeIcon>
                       <SideBarHeadings darkMode={darkMode}>
@@ -359,7 +359,7 @@ class VideoPlayer extends Component {
                       />
                     </SidebarLogosContainer>
                     <ContactusHeading weight="500" font="16px">
-                      Enjoy! Now see to your Channels and Recommendations!{' '}
+                      Enjoy! Now to see your channels and recommendations!
                     </ContactusHeading>
                   </SidebarFooterSection>
                 </SidebarSection>
