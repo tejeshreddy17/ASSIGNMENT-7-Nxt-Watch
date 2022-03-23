@@ -241,3 +241,20 @@ export const SavedButton = styled.button`
   font-size: 16px;
   color: ${props => (props.saveStatus ? '#2563eb' : '#64748b')};
 `
+export const Line = styled.hr`
+  width: 100%;
+  border: 1px rigid #64748b;
+`
+
+export const VideoPlayerLogoCont = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+`
+export const VideoPlayerDescriptionCOnt = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+`

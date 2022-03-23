@@ -1,18 +1,13 @@
 import {Component} from 'react'
-import {Link} from 'react-router-dom'
 import Cookies from 'js-cookie'
 import Loader from 'react-loader-spinner'
 
-import {AiFillHome} from 'react-icons/ai'
-
-import {RiMenuAddLine} from 'react-icons/ri'
-
 import {FaFire} from 'react-icons/fa'
-
-import {SiYoutubegaming} from 'react-icons/si'
 
 import Header from '../Header'
 import ModeContext from '../Context'
+
+import SideBarSection from '../SidebarSection'
 
 import TrendingVideoItem from '../TrendingVideoItem'
 import './index.css'
@@ -20,16 +15,8 @@ import './index.css'
 import {
   HomePageBackground,
   BelowHeaderBackground,
-  SidebarSection,
   MainSection,
-  TestCase,
   VideosSection,
-  HomeIcon,
-  SideBarHeadings,
-  SidebarFooterSection,
-  Sidebarlogos,
-  SidebarLogosContainer,
-  ContactusHeading,
   FailureImage,
   HeadingFailure,
   FailureDescription,
@@ -49,7 +36,6 @@ const apiLoadingStatus = {
 
 class SavedVideos extends Component {
   state = {
-    videos: [],
     apiStatus: apiLoadingStatus.initial,
   }
 
@@ -83,7 +69,6 @@ class SavedVideos extends Component {
     }))
     if (response.ok === true) {
       this.setState({
-        videos: formattedData,
         apiStatus: apiLoadingStatus.success,
       })
     } else {
@@ -131,28 +116,46 @@ class SavedVideos extends Component {
     }
   }
 
-  renderingContent = (darkMode, savedVideos) => (
-    <>
-      <TrendingHeadingContainer darkMode={darkMode}>
-        <TrendingLogo darkMode={darkMode}>
-          <FaFire />
-        </TrendingLogo>
-        <TrendingsectionHeading darkMode={darkMode}>
-          Saved Videos
-        </TrendingsectionHeading>
-      </TrendingHeadingContainer>
-
-      <VideosSection>
-        {savedVideos.map(eachData => (
-          <TrendingVideoItem
-            darkMode={darkMode}
-            eachVideo={eachData}
-            key={eachData.id}
+  renderingContent = (darkMode, savedVideos) => {
+    if (savedVideos.length === 0) {
+      return (
+        <FailureContainer>
+          <FailureImage
+            alt="no saved videos"
+            src="https://assets.ccbp.in/frontend/react-js/nxt-watch-no-saved-videos-img.png"
           />
-        ))}
-      </VideosSection>
-    </>
-  )
+          <HeadingFailure darkMode={darkMode}>
+            No saved videos found
+          </HeadingFailure>
+          <FailureDescription darkMode={darkMode}>
+            You can save your videos while watching them
+          </FailureDescription>
+        </FailureContainer>
+      )
+    }
+    return (
+      <>
+        <TrendingHeadingContainer darkMode={darkMode}>
+          <TrendingLogo darkMode={darkMode}>
+            <FaFire />
+          </TrendingLogo>
+          <TrendingsectionHeading darkMode={darkMode}>
+            Saved Videos
+          </TrendingsectionHeading>
+        </TrendingHeadingContainer>
+
+        <VideosSection>
+          {savedVideos.map(eachData => (
+            <TrendingVideoItem
+              darkMode={darkMode}
+              eachVideo={eachData}
+              key={eachData.id}
+            />
+          ))}
+        </VideosSection>
+      </>
+    )
+  }
 
   render() {
     const {match} = this.props
@@ -167,79 +170,7 @@ class SavedVideos extends Component {
             <HomePageBackground>
               <Header />
               <BelowHeaderBackground>
-                <SidebarSection darkMode={darkMode}>
-                  <Link className="side-bar-link-item " to="/">
-                    <TestCase darkMode={darkMode} outline={path === '/'}>
-                      <HomeIcon outline={path === '/'}>
-                        <AiFillHome />
-                      </HomeIcon>
-                      <SideBarHeadings darkMode={darkMode}>
-                        Home
-                      </SideBarHeadings>
-                    </TestCase>
-                  </Link>
-                  <Link className="side-bar-link-item " to="/trending">
-                    <TestCase
-                      darkMode={darkMode}
-                      outline={path === '/trending'}
-                    >
-                      <HomeIcon outline={path === '/trending'}>
-                        <FaFire />
-                      </HomeIcon>
-                      <SideBarHeadings darkMode={darkMode}>
-                        Trending
-                      </SideBarHeadings>
-                    </TestCase>
-                  </Link>
-                  <Link className="side-bar-link-item " to="/gaming">
-                    <TestCase outline={path === '/gaming'}>
-                      <HomeIcon outline={path === '/gaming'}>
-                        <SiYoutubegaming />
-                      </HomeIcon>
-                      <SideBarHeadings darkMode={darkMode}>
-                        Gaming
-                      </SideBarHeadings>
-                    </TestCase>
-                  </Link>
-                  <Link className="side-bar-link-item " to="/saved-videos">
-                    <TestCase
-                      darkMode={darkMode}
-                      outline={path === '/saved-videos'}
-                    >
-                      <HomeIcon
-                        darkMode={darkMode}
-                        outline={path === '/saved-videos'}
-                      >
-                        <RiMenuAddLine />
-                      </HomeIcon>
-                      <SideBarHeadings darkMode={darkMode}>
-                        Saved Videos
-                      </SideBarHeadings>
-                    </TestCase>
-                  </Link>
-                  <SidebarFooterSection>
-                    <ContactusHeading weight="bold" font="18px">
-                      CONTACT US
-                    </ContactusHeading>
-                    <SidebarLogosContainer>
-                      <Sidebarlogos
-                        src="https://assets.ccbp.in/frontend/react-js/nxt-watch-facebook-logo-img.png"
-                        alt="facebook logo"
-                      />
-                      <Sidebarlogos
-                        src="https://assets.ccbp.in/frontend/react-js/nxt-watch-twitter-logo-img.png"
-                        alt="twitter logo"
-                      />
-                      <Sidebarlogos
-                        src="https://assets.ccbp.in/frontend/react-js/nxt-watch-linked-in-logo-img.png"
-                        alt="linked in logo"
-                      />
-                    </SidebarLogosContainer>
-                    <ContactusHeading weight="500" font="16px">
-                      "Enjoy! Now to see your channels and recommendations!"
-                    </ContactusHeading>
-                  </SidebarFooterSection>
-                </SidebarSection>
+                <SideBarSection darkMode={darkMode} match={match} />
                 <MainSection data-testid="savedVideos" darkMode={darkMode}>
                   {this.renderingUI(darkMode, savedVideos)}
                 </MainSection>

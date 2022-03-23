@@ -21,8 +21,6 @@ import {SiYoutubegaming} from 'react-icons/si'
 import {BsDot} from 'react-icons/bs'
 import Header from '../Header'
 
-import GamingVideoItem from '../GamingVideoItem'
-
 import ModeContext from '../Context'
 
 import './index.css'
@@ -56,6 +54,9 @@ import {
   LikesButton,
   SavedButton,
   DisLikesButton,
+  VideoPlayerLogoCont,
+  Line,
+  VideoPlayerDescriptionCOnt,
 } from './styledComponents'
 
 const apiLoadingStatus = {
@@ -140,7 +141,7 @@ class VideoPlayer extends Component {
         Oops! Something Went Wrong
       </HeadingFailure>
       <FailureDescription>
-        We are having some trouble to compare your request. Please Try again
+        We are having some trouble to complete your request. Please try again.
       </FailureDescription>
       <FailureTryAgain onClick={this.gettingVideos}>Retry</FailureTryAgain>
     </FailureContainer>
@@ -176,8 +177,9 @@ class VideoPlayer extends Component {
     const {likeStatus, dislikeStatus, saveStatus} = this.state
     const {
       publishedAt,
-
+      channel,
       title,
+      description,
 
       viewCount,
     } = videos
@@ -256,10 +258,22 @@ class VideoPlayer extends Component {
                         onClick={savingVideo}
                         saveStatus={playedVideoObject.length !== 0}
                       >
-                        <RiMenuAddLine /> Save
+                        <RiMenuAddLine />
+                        {playedVideoObject.length !== 0 ? 'Saved' : 'Save'}
                       </SavedButton>
                     </LikeDislikeContainer>
                   </ViewsContainer>
+                  <Line />
+                  <VideoPlayerLogoCont>
+                    <CreatorLogo src={channel.profileImageUrl} />
+                    <VideoPlayerDescriptionCOnt>
+                      <ChannelName>{channel.name}</ChannelName>
+                      <ChannelName>
+                        {channel.subscriberCount} Subscribers
+                      </ChannelName>
+                      <ChannelName>{description}</ChannelName>
+                    </VideoPlayerDescriptionCOnt>
+                  </VideoPlayerLogoCont>
                 </DetailsContainer>
               </DescriptionContainer>
             </VideosSection>

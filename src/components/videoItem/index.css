@@ -10,6 +10,12 @@
   flex-grow: 1;
   margin-bottom: 15px;
 }
+@media screen and (max-width: 576px) {
+  .link-item {
+    max-width: 100%;
+    margin-right: 0px;
+  }
+}
 
 .dot {
   color: #909090;

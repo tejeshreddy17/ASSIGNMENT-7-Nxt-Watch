@@ -8,7 +8,6 @@ import {
   VideoContainer,
   Description,
   DescriptionContainer,
-  CreatorLogo,
   VideoThumbnail,
   DetailsContainer,
   ChannelName,

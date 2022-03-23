@@ -4,6 +4,9 @@ export const VideoContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 15px;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `
 export const Description = styled.p`
   color: ${props => (props.darkMode ? '#f9f9f9' : '#1e293b')};
@@ -14,6 +17,9 @@ export const Description = styled.p`
 `
 export const VideoThumbnail = styled.img`
   height: 160px;
+  @media screen and (max-width: 768px) {
+    height: 250px;
+  }
 `
 
 export const DescriptionContainer = styled.div`

@@ -16,7 +16,8 @@ export const Description = styled.p`
   font-size: 20px;
 `
 export const VideoThumbnail = styled.img`
-  width: 450px;
+  width: 400px;
+  max-height: 200px;
 `
 
 export const DescriptionContainer = styled.div`

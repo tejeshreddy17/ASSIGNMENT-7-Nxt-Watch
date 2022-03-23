@@ -6,7 +6,9 @@ import Cookies from 'js-cookie'
 
 import {FaMoon} from 'react-icons/fa'
 
-import {FiSun} from 'react-icons/fi'
+import {FiSun, FiLogOut} from 'react-icons/fi'
+
+import {GiHamburgerMenu} from 'react-icons/gi'
 
 import ModeContext from '../Context'
 
@@ -24,12 +26,15 @@ import {
   ConfirmButton,
   CancelButton,
   ChangeModeButton,
+  MenuButton,
+  LogoContainer,
+  LogoutBUttonSmallDevices,
 } from './styledComponents'
 
 const Header = props => (
   <ModeContext.Consumer>
     {value => {
-      const {darkMode, changeMode, savedVideos} = value
+      const {darkMode, changeMode} = value
 
       const onClickingChangeMode = () => {
         changeMode()
@@ -44,18 +49,23 @@ const Header = props => (
       }
       return (
         <NavbarSection darkMode={darkMode}>
-          <Link to="/">
-            <ImageSection>
-              <HeaderLogo
-                src={
-                  darkMode
-                    ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-dark-theme-img.png'
-                    : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png'
-                }
-                alt="website logo"
-              />
-            </ImageSection>
-          </Link>
+          <LogoContainer>
+            <MenuButton>
+              <GiHamburgerMenu />
+            </MenuButton>
+            <Link to="/">
+              <ImageSection>
+                <HeaderLogo
+                  src={
+                    darkMode
+                      ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-dark-theme-img.png'
+                      : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png'
+                  }
+                  alt="website logo"
+                />
+              </ImageSection>
+            </Link>
+          </LogoContainer>
 
           <OptionsSection>
             <ChangeModeButton
@@ -73,6 +83,37 @@ const Header = props => (
               modal
               nested
               trigger={<LogoutButton darkMode={darkMode}>Logout</LogoutButton>}
+              className="popup-content"
+              overlayStyle={overlayStyle}
+            >
+              {close => (
+                <>
+                  <PopupDescription>
+                    Are you sure, you want to logout
+                  </PopupDescription>
+                  <ButtonContainer>
+                    <CancelButton
+                      type="button"
+                      className="trigger-button"
+                      onClick={() => close()}
+                    >
+                      Cancel
+                    </CancelButton>
+                    <ConfirmButton type="button" onClick={loggingout}>
+                      Confirm
+                    </ConfirmButton>
+                  </ButtonContainer>
+                </>
+              )}
+            </Popup>
+            <Popup
+              modal
+              nested
+              trigger={
+                <LogoutBUttonSmallDevices darkMode={darkMode}>
+                  <FiLogOut />
+                </LogoutBUttonSmallDevices>
+              }
               className="popup-content"
               overlayStyle={overlayStyle}
             >

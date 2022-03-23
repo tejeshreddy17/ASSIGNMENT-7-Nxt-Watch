@@ -1,18 +1,13 @@
 import {Component} from 'react'
-import {Link} from 'react-router-dom'
 import Loader from 'react-loader-spinner'
 import Cookies from 'js-cookie'
-import {AiOutlineSearch, AiFillHome, AiOutlineClose} from 'react-icons/ai'
-
-import {RiMenuAddLine} from 'react-icons/ri'
-
-import {FaFire} from 'react-icons/fa'
-
-import {SiYoutubegaming} from 'react-icons/si'
+import {AiOutlineSearch, AiOutlineClose} from 'react-icons/ai'
 
 import Header from '../Header'
 
 import HomeVideoItem from '../videoItem'
+
+import SideBarSection from '../SidebarSection'
 
 import ModeContext from '../Context'
 
@@ -21,24 +16,16 @@ import './index.css'
 import {
   HomePageBackground,
   BelowHeaderBackground,
-  SidebarSection,
   MainSection,
-  TestCase,
   VideosSection,
   SearchContainer,
   SearchButton,
   SearchInput,
-  HomeIcon,
-  SideBarHeadings,
   BannerSection,
   BannerLogo,
   BannerButton,
   CloseButton,
   Bannerheading,
-  SidebarFooterSection,
-  Sidebarlogos,
-  SidebarLogosContainer,
-  ContactusHeading,
   FailureImage,
   HeadingFailure,
   FailureDescription,
@@ -57,7 +44,7 @@ class Home extends Component {
     videos: [],
     showBanner: true,
     searchInput: '',
-    apiStatus: apiLoadingStatus.loading,
+    apiStatus: apiLoadingStatus.initial,
   }
 
   componentDidMount() {
@@ -131,7 +118,7 @@ class Home extends Component {
         Oops! Something Went Wrong
       </HeadingFailure>
       <FailureDescription>
-        We are having some trouble to compare your request. Please Try again
+        We are having some trouble to compare your request. Please Try again.
       </FailureDescription>
       <FailureTryAgain onClick={this.gettingVideos}>Retry</FailureTryAgain>
     </>
@@ -199,70 +186,7 @@ class Home extends Component {
             <HomePageBackground>
               <Header />
               <BelowHeaderBackground>
-                <SidebarSection darkMode={darkMode}>
-                  <Link className="side-bar-link-item " to="/">
-                    <TestCase darkMode={darkMode} outline={path === '/'}>
-                      <HomeIcon outline={path === '/'}>
-                        <AiFillHome />
-                      </HomeIcon>
-                      <SideBarHeadings darkMode={darkMode}>
-                        Home
-                      </SideBarHeadings>
-                    </TestCase>
-                  </Link>
-                  <Link className="side-bar-link-item " to="/trending">
-                    <TestCase outline={path === '/trending'}>
-                      <HomeIcon outline={path === '/trending'}>
-                        <FaFire />
-                      </HomeIcon>
-                      <SideBarHeadings darkMode={darkMode}>
-                        Trending
-                      </SideBarHeadings>
-                    </TestCase>
-                  </Link>
-                  <Link className="side-bar-link-item " to="/gaming">
-                    <TestCase outline={path === '/gaming'}>
-                      <HomeIcon outline={path === '/gaming'}>
-                        <SiYoutubegaming />
-                      </HomeIcon>
-                      <SideBarHeadings darkMode={darkMode}>
-                        Gaming
-                      </SideBarHeadings>
-                    </TestCase>
-                  </Link>
-                  <Link className="side-bar-link-item " to="/saved-videos">
-                    <TestCase outline={path === '/saved-videos'}>
-                      <HomeIcon outline={path === '/gaming'}>
-                        <RiMenuAddLine />
-                      </HomeIcon>
-                      <SideBarHeadings darkMode={darkMode}>
-                        Saved Videos
-                      </SideBarHeadings>
-                    </TestCase>
-                  </Link>
-                  <SidebarFooterSection>
-                    <ContactusHeading weight="bold" font="18px">
-                      CONTACT US
-                    </ContactusHeading>
-                    <SidebarLogosContainer>
-                      <Sidebarlogos
-                        src="https://assets.ccbp.in/frontend/react-js/nxt-watch-facebook-logo-img.png"
-                        alt="facebook logo"
-                      />
-                      <Sidebarlogos
-                        src="https://assets.ccbp.in/frontend/react-js/nxt-watch-twitter-logo-img.png"
-                        alt="twitter logo"
-                      />
-                      <Sidebarlogos
-                        src="https://assets.ccbp.in/frontend/react-js/nxt-watch-linked-in-logo-img.png"
-                        alt="linked in logo"
-                      />
-                    </SidebarLogosContainer>
-                    <ContactusHeading weight="500" font="16px">
-                      "Enjoy! Now to see your channels and recommendations!"
-                    </ContactusHeading>
-                  </SidebarFooterSection>
-                </SidebarSection>
+                <SideBarSection darkMode={darkMode} match={match} />
                 <MainSection data-testid="home" darkMode={darkMode}>
                   {showBanner && (
                     <BannerSection>

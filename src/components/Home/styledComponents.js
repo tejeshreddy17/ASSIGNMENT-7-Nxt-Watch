@@ -8,9 +8,15 @@ export const HomePageBackground = styled.div`
 `
 export const BelowHeaderBackground = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-grow: 1;
   overflow-y: auto;
+  @media screen and (min-width: 768px) {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    overflow-y: auto;
+  }
 `
 export const SidebarSection = styled.div`
   display: flex;
@@ -25,9 +31,17 @@ export const MainSection = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  width: 70%;
   flex-grow: 1;
   overflow-y: auto;
+  @media screen and (min-width: 768px) {
+    background-color: ${props => (props.darkMode ? '#181818' : '#f9f9f9')};
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 70%;
+    flex-grow: 1;
+    overflow-y: auto;
+  }
 `
 export const VideosSection = styled.div`
   display: flex;
@@ -35,7 +49,11 @@ export const VideosSection = styled.div`
   flex-wrap: wrap;
   justify-content: flex-start;
   flex-grow: 1;
+
   padding: 20px;
+  @media screen and (max-width: 768px) {
+    padding: 0px;
+  }
 `
 export const TestCase = styled.div`
   background-color: ${props => {
@@ -58,8 +76,8 @@ export const SearchContainer = styled.div`
   display: flex;
   flex-direction: row;
   height: 35px;
-  width: 550px;
   margin-left: 20px;
+  margin-right: 20px;
   margin-top: 20px;
 `
 export const SearchButton = styled.button`
@@ -75,6 +93,9 @@ export const SearchButton = styled.button`
   cursor: pointer;
   background-color: ${props => (props.darkMode ? '#313031' : '')};
   color: ${props => (props.darkMode ? '#ebebeb' : '')};
+  @media screen and (max-width: 768px) {
+    width: 45px;
+  }
 `
 export const SearchInput = styled.input`
   height: 35px;
@@ -86,6 +107,9 @@ export const SearchInput = styled.input`
   background-color: ${props => (props.darkMode ? 'transparent' : '')};
   border: ${props =>
     props.darkMode ? '1px solid #3A393A' : '1px solid #ebebeb '};
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `
 export const HomeIcon = styled.button`
   color: ${props => (props.outline ? ' red' : '#475569')};

@@ -105,6 +105,7 @@ export const HeadingFailure = styled.h1`
   font-size: 28px;
 `
 export const FailureDescription = styled.p`
+  color: ${props => (props.darkMode ? '#f9f9f9' : '#475569')};
   font-size: 16px;
   text-align: center;
   margin-top: 5px;
